@@ -39,6 +39,11 @@ def check_collision(pipes):
     if bird_rect.top <= -75 or bird_rect.bottom >= 750:
         return False
     return True
+def check_collision(floor):
+    if bird_rect.top <= -75 or bird_rect.bottom >= 650:
+        die_sound.play()
+        return False
+    return True
 
 def rotate_bird(bird1):
 	new_bird = pygame.transform.rotozoom(bird1,-bird_movement*3,1)
@@ -112,6 +117,7 @@ game_over_rect = game_over_surface.get_rect(center=(216,384))
 flap_sound = pygame.mixer.Sound('sound/sfx_wing.wav')
 hit_sound = pygame.mixer.Sound('sound/sfx_hit.wav')
 score_sound = pygame.mixer.Sound('sound/sfx_point.wav')
+die_sound = pygame.mixer.Sound('sound/sfx_die.wav')
 #while loop của trò chơi
 while True:
     for event in pygame.event.get():
