@@ -8,15 +8,11 @@ def create_pipe():
         random_pipe_pos = random.choice(pipe_height_low)
     else:
         random_pipe_pos = random.choice(pipe_height_normal)
-
     bottom_rect = pipe_surface.get_rect(midtop=(500, random_pipe_pos))
-    top_rect = pipe_surface.get_rect(midtop=(500, random_pipe_pos - 750))
-
+    top_rect = pipe_surface.get_rect(midtop=(500, random_pipe_pos - 900))
     bottom_pipe = {"rect": bottom_rect, "scored": False}
     top_pipe = {"rect": top_rect}
-
     return bottom_pipe, top_pipe
-
 
 def move_pipe(pipes):
     for pipe in pipes:
@@ -75,7 +71,6 @@ bird_movement = 0
 game_active = True
 score = 0
 high_score = 0
-pipe_passed = False
 #chèn background
 bg = pygame.image.load('assets/background-night.png').convert()
 bg = pygame.transform.scale2x(bg)
@@ -112,11 +107,11 @@ game_over_rect = game_over_surface.get_rect(center=(216,384))
 #Chèn âm thanh
 flap_sound = pygame.mixer.Sound('sound/sfx_wing.wav')
 hit_sound = pygame.mixer.Sound('sound/sfx_hit.wav')
-score_sound = pygame.mixer.Sound('sound/sfx_point.wav')
-score_sound_countdown = 100
+score_sound = pygame.mixer.Sound('sound/sfx_point.wav') 
+
 #while loop của trò chơi
 while True:
-    for event in pygame.event.get():
+    for event in pygame.event.get() :
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
