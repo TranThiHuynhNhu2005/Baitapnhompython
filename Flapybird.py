@@ -75,7 +75,6 @@ bird_movement = 0
 game_active = True
 score = 0
 high_score = 0
-pipe_passed = False
 #chèn background
 bg = pygame.image.load('assets/background-night.png').convert()
 bg = pygame.transform.scale2x(bg)
@@ -113,7 +112,6 @@ game_over_rect = game_over_surface.get_rect(center=(216,384))
 flap_sound = pygame.mixer.Sound('sound/sfx_wing.wav')
 hit_sound = pygame.mixer.Sound('sound/sfx_hit.wav')
 score_sound = pygame.mixer.Sound('sound/sfx_point.wav')
-score_sound_countdown = 100
 #while loop của trò chơi
 while True:
     for event in pygame.event.get():
