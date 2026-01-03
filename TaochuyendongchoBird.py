@@ -71,7 +71,7 @@ bird_movement = 0
 game_active = True
 score = 0
 high_score = 0
-pipe_passed = False
+
 #chèn background
 bg = pygame.image.load('assets/background-night.png').convert()
 bg = pygame.transform.scale2x(bg)
@@ -112,7 +112,7 @@ while True:
                 bird_rect.center = (100,384)
                 bird_movement = 0 
 				score = 0
-				pipe_passed = False
+				
         if event.type == spawnpipe:
             pipe_list.extend(create_pipe())
         if event.type == birdflap:
