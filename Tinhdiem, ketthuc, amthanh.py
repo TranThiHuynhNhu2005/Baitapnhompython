@@ -131,7 +131,7 @@ while True:
                 bird_rect.center = (100,384)
                 bird_movement = 0
                 score = 0
-                pipe_passed = False
+               
 
         if event.type == spawnpipe:
             pipe_list.extend(create_pipe())
