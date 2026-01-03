@@ -39,7 +39,14 @@ def check_collision(pipes):
     if bird_rect.top <= -75 or bird_rect.bottom >= 750:
         return False
     return True
-def check_collision(floor):
+def check_collision(pipes):
+    # Va chạm với ống
+    for pipe in pipes:
+        if bird_rect.colliderect(pipe["rect"]):
+            hit_sound.play()
+            return False
+
+    # Va chạm trần hoặc sàn
     if bird_rect.top <= -75 or bird_rect.bottom >= 650:
         die_sound.play()
         return False
