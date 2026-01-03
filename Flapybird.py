@@ -28,14 +28,6 @@ def draw_pipe(pipes):
             screen.blit(flip_pipe, rect)
 
 def check_collision(pipes):
-    for pipe in pipes:
-        if bird_rect.colliderect(pipe["rect"]):
-            hit_sound.play()
-            return False
-    if bird_rect.top <= -75 or bird_rect.bottom >= 750:
-        return False
-    return True
-def check_collision(pipes):
     # Va chạm với ống
     for pipe in pipes:
         if bird_rect.colliderect(pipe["rect"]):
