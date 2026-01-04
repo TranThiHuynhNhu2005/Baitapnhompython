@@ -37,6 +37,10 @@ def check_collision(pipes):
         if bird_rect.colliderect(pipe["rect"]):
             hit_sound.play()
             return False
+<<<<<<< HEAD
+=======
+
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
     if bird_rect.top <= -75 or bird_rect.bottom >= 650:
         die_sound.play()
         return False
@@ -53,16 +57,28 @@ def bird_animation():
 def score_display(state):
     if state == "main":
         score_surface = game_font.render(str(int(score)), True, (255,255,255))
+<<<<<<< HEAD
         screen.blit(score_surface, score_surface.get_rect(center=(216,100)))
     else:
         score_surface = game_font.render(f"Score: {int(score)}", True, (255,255,255))
         high_surface = game_font.render(f"Best: {int(high_score)}", True, (255,255,255))
         screen.blit(score_surface, score_surface.get_rect(center=(216,320)))
         screen.blit(high_surface, high_surface.get_rect(center=(216,380)))
+=======
+        score_rect = score_surface.get_rect(center=(216,100))
+        screen.blit(score_surface, score_rect)
+    else:
+        score_surface = game_font.render(f"Score: {int(score)}", True, (255,255,255))
+        high_score_surface = game_font.render(f"High Score: {int(high_score)}", True, (255,255,255))
+
+        screen.blit(score_surface, score_surface.get_rect(center=(216,100)))
+        screen.blit(high_score_surface, high_score_surface.get_rect(center=(216,630)))
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
 
 def update_score(score, high_score):
     return max(score, high_score)
 
+<<<<<<< HEAD
 # ===== HIGH SCORE FILE =====
 HIGH_SCORE_FILE = "highscore.txt"
 
@@ -104,6 +120,8 @@ def draw_instructions():
         surf = game_font.render(text, True, (255,255,255))
         screen.blit(surf, surf.get_rect(center=(216,250+i*60)))
 
+=======
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
 # ================= KHỞI TẠO =================
 pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
@@ -113,6 +131,7 @@ game_font = pygame.font.Font("04B_19__.TTF", 35)
 
 gravity = 0.25
 bird_movement = 0
+<<<<<<< HEAD
 
 MENU, PLAYING, INSTRUCTIONS, SHOW_SCORE = "menu", "playing", "instructions", "score"
 game_state = MENU
@@ -122,6 +141,12 @@ has_played = False   # <<< quan trọng
 score = 0
 high_score = load_high_score()
 
+=======
+game_active = False     # chưa chạy
+game_started = False   # chưa bấm SPACE
+score = 0
+high_score = 0
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
 bg = pygame.transform.scale2x(pygame.image.load("assets/background-night.png").convert())
 floor = pygame.transform.scale2x(pygame.image.load("assets/floor.png").convert())
 floor_x_pos = 0
@@ -144,9 +169,18 @@ pipe_list = []
 spawnpipe = pygame.USEREVENT
 pygame.time.set_timer(spawnpipe, 1800)
 
+<<<<<<< HEAD
 pipe_height_low = [350,380,410,440]
 pipe_height_normal = [200,250,300,350,400,450]
 
+=======
+pipe_height_low = [350, 380, 410, 440]
+pipe_height_normal = [200,250,300,350,400,450]
+
+game_over_surface = pygame.transform.scale2x(pygame.image.load("assets/message.png").convert_alpha())
+game_over_rect = game_over_surface.get_rect(center=(216,384))
+
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
 flap_sound  = pygame.mixer.Sound("sound/sfx_wing.wav")
 hit_sound   = pygame.mixer.Sound("sound/sfx_hit.wav")
 score_sound = pygame.mixer.Sound("sound/sfx_point.wav")
@@ -161,14 +195,27 @@ while True:
             sys.exit()
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+<<<<<<< HEAD
             if game_state == MENU:
                 game_state = PLAYING
+=======
+            if not game_started:
+                game_started = True
+                game_active = True
+                bird_movement = -8
+                flap_sound.play()
+            elif game_active:
+                bird_movement = -8
+                flap_sound.play()
+            else:
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
                 game_active = True
                 has_played = True
                 pipe_list.clear()
                 bird_rect.center = (100,384)
                 bird_movement = -8
                 score = 0
+<<<<<<< HEAD
             elif game_state == INSTRUCTIONS:
                 game_state = MENU
             elif game_active:
@@ -184,6 +231,9 @@ while True:
             bird_movement = -8
             score = 0
 
+=======
+
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
         if event.type == spawnpipe and game_active:
             pipe_list.extend(create_pipe())
 
@@ -191,6 +241,7 @@ while True:
             bird_index = (bird_index + 1) % 3
             bird, bird_rect = bird_animation()
 
+<<<<<<< HEAD
     screen.blit(bg,(0,0))
 
     if game_state == MENU:
@@ -221,6 +272,35 @@ while True:
             save_high_score(high_score)
             game_state = MENU   # <<< QUAY LẠI MENU
 
+=======
+    screen.blit(bg, (0,0))
+
+    if game_started and game_active:
+        bird_movement += gravity
+        rotated_bird = rotate_bird(bird)
+        bird_rect.centery += bird_movement
+        screen.blit(rotated_bird, bird_rect)
+
+        game_active = check_collision(pipe_list)
+
+        pipe_list = move_pipe(pipe_list)
+        draw_pipe(pipe_list)
+
+        for pipe in pipe_list:
+            if "scored" in pipe and pipe["rect"].centerx < bird_rect.centerx and not pipe["scored"]:
+                score += 1
+                score_sound.play()
+                pipe["scored"] = True
+
+        score_display("main")
+
+    else:
+        screen.blit(game_over_surface, game_over_rect)
+        if not game_active:
+            high_score = update_score(score, high_score)
+            score_display("over")
+
+>>>>>>> 82525dfbf6ad026d0d7630fe76a7388a048aa98d
     floor_x_pos -= 1
     draw_floor()
     if floor_x_pos <= -432:

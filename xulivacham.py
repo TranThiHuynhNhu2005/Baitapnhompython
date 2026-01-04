@@ -69,13 +69,17 @@ pygame.time.set_timer(spawnpipe, 1800)
 
 # ================= VA CHẠM =================
 def check_collision(pipes):
+    # Va chạm với ống
     for pipe in pipes:
-        if bird_rect.colliderect(pipe):
+        if bird_rect.colliderect(pipe["rect"]):
+            hit_sound.play()
             return False
+
+    # Va chạm trần hoặc sàn
     if bird_rect.top <= -75 or bird_rect.bottom >= 650:
+        die_sound.play()
         return False
     return True
-
 # ================= BIẾN GAME =================
 game_active = True
 
